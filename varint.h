@@ -1,3 +1,6 @@
+#ifndef __VARINT_H
+#define __VARINT_H
+
 #include <stdint.h>
 #include "endian.h"
 
@@ -74,3 +77,5 @@ size_t bbp_varint_size(uint64_t n) {
         return 9;
     }
 }
+
+#endif
