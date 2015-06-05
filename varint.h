@@ -70,11 +70,11 @@ size_t bbp_varint_size(uint64_t n) {
     if (n < BBP_VARINT16) {
         return 1;
     } else if (n <= UINT16_MAX) {
-        return 3;
+        return 1 + sizeof(uint16_t);
     } else if (n <= UINT32_MAX) {
-        return 5;
+        return 1 + sizeof(uint32_t);
     } else {
-        return 9;
+        return 1 + sizeof(uint64_t);
     }
 }
 
