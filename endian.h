@@ -82,48 +82,4 @@ void bbp_ecopy(bbp_endian_t e, uint8_t *dst, uint8_t *src, size_t len) {
     }
 }
 
-uint8_t bbp_hex2byte(const char ch) {
-    if ((ch >= '0') && (ch <= '9')) {
-        return ch - '0';
-    }
-    if ((ch >= 'a') && (ch <= 'f')) {
-        return ch - 'a' + 10;
-    }
-    return 0;
-}
-
-void bbp_parse_hex(bbp_endian_t e, uint8_t *v, const char *str) {
-    const size_t count = strlen(str) / 2;
-    const size_t mul = ((e == BBP_LITTLE) ? 0 : 1);
-    size_t i;
-
-    for (i = 0; i < count; ++i) {
-        const char hi = bbp_hex2byte(str[i * 2]);
-        const char lo = bbp_hex2byte(str[i * 2 + 1]);
-        const size_t offset = mul * (count - 2 * i - 1);
-
-        v[i + offset] = hi * 16 + lo;
-    }
-}
-
-uint8_t *bbp_alloc_hex(bbp_endian_t e, const char *str, size_t *len) {
-    const size_t count = strlen(str) / 2;
-    const size_t mul = ((e == BBP_LITTLE) ? 0 : 1);
-    size_t i;
-
-    uint8_t *v = malloc(count);
-
-    for (i = 0; i < count; ++i) {
-        const char hi = bbp_hex2byte(str[i * 2]);
-        const char lo = bbp_hex2byte(str[i * 2 + 1]);
-        const size_t offset = mul * (count - 2 * i - 1);
-
-        v[i + offset] = hi * 16 + lo;
-    }
-
-    *len = count;
-
-    return v;
-}
-
 #endif

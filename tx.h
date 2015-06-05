@@ -81,6 +81,13 @@ void bbp_txin_create_signable(bbp_txin_t *txin, const bbp_outpoint_t *outpoint, 
     txin->sequence = 0xffffffff;
 }
 
+void bbp_txin_create_truncated(bbp_txin_t *txin, const bbp_outpoint_t *outpoint) {
+    memcpy(&txin->outpoint, outpoint, sizeof(bbp_outpoint_t));
+    txin->script_len = 0;
+    txin->script = NULL;
+    txin->sequence = 0xffffffff;
+}
+
 size_t bbp_tx_size(const bbp_tx_t *tx, bbp_sighash_t flag) {
     size_t size = 0;
     int i;
