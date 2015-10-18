@@ -6,10 +6,6 @@
 #include <stdint.h>
 #include "endian.h"
 
-size_t bbp_eoffset(size_t i, size_t len) {
-    return ((bbp_host_endian() == BBP_LITTLE) ? i : (len - i - 1));
-}
-
 void bbp_print_hex(const char *label, const uint8_t *v, size_t len) {
     size_t i;
 
