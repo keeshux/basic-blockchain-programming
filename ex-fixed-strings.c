@@ -12,7 +12,9 @@ int main() {
 
     *(uint32_t *)(ser) = bbp_eint32(BBP_LITTLE, n32);
     memcpy(ser + 4, str, str_real_len);
-    memset(ser + 4 + str_real_len, '\0', str_pad_len);
+    if (str_pad_len > 0) {
+        memset(ser + 4 + str_real_len, '\0', str_pad_len);
+    }
     if (bbp_host_endian() != BBP_LITTLE) {
         bbp_reverse(ser + 4, str_len);
     }
