@@ -13,6 +13,8 @@ int main() {
     uint8_t *sig;
     unsigned int sig_len;
 
+    /* */
+
     /* keypair */
     bbp_parse_hex(priv, "16260783e40b16731673622ac8a5b045fc3ea4af70f727f3f9e92bdd3a1ddc42");
     key = bbp_ec_new_keypair(priv);

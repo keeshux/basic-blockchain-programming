@@ -41,6 +41,7 @@ typedef uint8_t *bbp_message_t;
 
 void bbp_outpoint_fill(bbp_outpoint_t *outpoint, const char *txid, uint32_t index) {
     bbp_parse_hex(outpoint->txid, txid);
+    bbp_reverse(outpoint->txid, 32);
     outpoint->index = bbp_eint32(BBP_LITTLE, index);
 }
 

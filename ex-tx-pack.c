@@ -13,7 +13,9 @@ int main() {
     size_t rawtx_len;
     uint8_t txid[32];
 
-    const char txid_exp[] = "d189c659a60a30ea7ca66ea53249c3ae3e7557399a48c6948738266f719616d2";
+    const char txid_exp[] = "9996e2f64b6af0232dd9c897395ce51fdd35e6359edd2855c60ff823d8d657d1";
+
+    /* */
 
     /* inputs */
     bbp_outpoint_fill(&outpoint, "f34e1c37e736727770fed85d1b129713ef7f300304498c31c833985f487fa2f3", 0);
