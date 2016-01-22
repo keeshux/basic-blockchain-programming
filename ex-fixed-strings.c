@@ -19,9 +19,6 @@ int main() {
     if (str_pad_len > 0) {
         memset(ser + 4 + str_real_len, '\0', str_pad_len);
     }
-    if (bbp_host_endian() != BBP_LITTLE) {
-        bbp_reverse(ser + 4, str_len);
-    }
     *(uint16_t *)(ser + 4 + str_len) = bbp_eint16(BBP_LITTLE, n16);
 
     bbp_print_hex("ser      ", ser, sizeof(ser));

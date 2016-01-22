@@ -10,7 +10,7 @@ int main() {
 
     const char sha256_exp[] = "518ad5a375fa52f84b2b3df7933ad685eb62cf69869a96731561f94d10826b5c";
     const char hash256_exp[] = "90986ea4e28b847cc7f9beba87ea81b221ca6eaf9828a8b04c290c21d891bcda";
-    const char ser_exp[] = "7fd1dabc91d8210c294cb0a82898af6eca21b281ea87babef9c77c848be2a46e98908c";
+    const char ser_exp[] = "7fd190986ea4e28b847cc7f9beba87ea81b221ca6eaf9828a8b04c290c21d891bcda8c";
 
     /* */
 
@@ -26,7 +26,6 @@ int main() {
 
     *(uint16_t *)(ser) = bbp_eint16(BBP_LITTLE, prefix);
     memcpy(ser + 2, digest, 32);
-    bbp_reverse(ser + 2, 32);
     *(ser + 2 + 32) = suffix;
 
     bbp_print_hex("ser      ", ser, sizeof(ser));
