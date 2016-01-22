@@ -10,9 +10,14 @@ int main() {
     };
     char *base58;
 
+    const char base58_exp[] = "8niM7FzqQeaPANNtRwEtQGi37YRcFwx1UBZMX8214MVq";
+
+    /* */
+
     base58 = bbp_base58(bytes, sizeof(bytes));
     bbp_print_hex("hex", bytes, sizeof(bytes));
-    printf("base58: %s\n", base58);
+    printf("base58      : %s\n", base58);
+    printf("base58 (exp): %s\n", base58_exp);
     free(base58);
 
     return 0;

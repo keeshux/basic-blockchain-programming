@@ -12,6 +12,10 @@ int main() {
     uint8_t wif_bytes[34];
     char *wif;
 
+    const char wif_exp[] = "cNKkmrwHuShs2mvkVEKfXULxXhxRo3yy1cK6sq62uBp2Pc8Lsa76";
+
+    /* */
+
     bbp_print_hex("priv", priv_bytes, sizeof(priv_bytes));
 
     wif_bytes[0] = 0xef;
@@ -19,7 +23,8 @@ int main() {
     wif_bytes[33] = 0x01;
 
     wif = bbp_base58check(wif_bytes, 34);
-    printf("WIF: %s\n", wif);
+    printf("WIF      : %s\n", wif);
+    printf("WIF (exp): %s\n", wif_exp);
     free(wif);
 
     return 0;

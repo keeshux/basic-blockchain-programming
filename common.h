@@ -11,7 +11,7 @@ void bbp_print_hex(const char *label, const uint8_t *v, size_t len) {
 
     printf("%s: ", label);
     for (i = 0; i < len; ++i) {
-        printf("%02x", v[bbp_eoffset(i, len)]);
+        printf("%02x", v[i]);
     }
     printf("\n");
 }
@@ -26,7 +26,7 @@ uint8_t bbp_hex2byte(const char ch) {
     return 0;
 }
 
-void bbp_parse_hex(bbp_endian_t e, uint8_t *v, const char *str) {
+void bbp_parse_hex(uint8_t *v, const char *str) {
     const size_t count = strlen(str) / 2;
     size_t i;
 
@@ -34,11 +34,11 @@ void bbp_parse_hex(bbp_endian_t e, uint8_t *v, const char *str) {
         const char hi = bbp_hex2byte(str[i * 2]);
         const char lo = bbp_hex2byte(str[i * 2 + 1]);
 
-        v[bbp_eoffset(i, count)] = hi * 16 + lo;
+        v[i] = hi * 16 + lo;
     }
 }
 
-uint8_t *bbp_alloc_hex(bbp_endian_t e, const char *str, size_t *len) {
+uint8_t *bbp_alloc_hex(const char *str, size_t *len) {
     const size_t count = strlen(str) / 2;
     size_t i;
 
@@ -48,7 +48,7 @@ uint8_t *bbp_alloc_hex(bbp_endian_t e, const char *str, size_t *len) {
         const char hi = bbp_hex2byte(str[i * 2]);
         const char lo = bbp_hex2byte(str[i * 2 + 1]);
 
-        v[bbp_eoffset(i, count)] = hi * 16 + lo;
+        v[i] = hi * 16 + lo;
     }
 
     *len = count;

@@ -75,15 +75,4 @@ void bbp_reverse(uint8_t *dst, size_t len) {
     }
 }
 
-void bbp_ecopy(bbp_endian_t e, uint8_t *dst, uint8_t *src, size_t len) {
-    memcpy(dst, src, len);
-    if (bbp_host_endian() != e) {
-        bbp_reverse(dst, len);
-    }
-}
-
-size_t bbp_eoffset(size_t i, size_t len) {
-    return ((bbp_host_endian() == BBP_LITTLE) ? i : (len - i - 1));
-}
-
 #endif

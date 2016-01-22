@@ -13,13 +13,17 @@ int main() {
     size_t varlen;
     uint8_t data[100] = { 0 };
 
+    const char data_exp[] = "e303418ba620e1b78360";
+
+    /* */
+
     len = bbp_varint_get(bytes, &varlen);
     printf("len: %lu, varlen: %lu\n", len, varlen);
 
-    bbp_ecopy(BBP_LITTLE, data, bytes + varlen, len);
+    memcpy(data, bytes + varlen, len);
 
-    /* e303418ba620e1b78360 */
-    bbp_print_hex("data", data, len);
+    bbp_print_hex("data      ", data, len);
+    printf("data (exp): %s\n", data_exp);
 
     return 0;
 }

@@ -17,14 +17,20 @@ int main() {
     uint8_t *der, *der_copy;
     size_t der_len;
 
+    const char digest_exp[] = "4554813e91f3d5be790c7c608f80b2b00f3ea77512d49039e9e3dc45f89e2f01";
+
+    /* */
+
     key = bbp_ec_new_keypair(priv_bytes);
     if (!key) {
         puts("Unable to create keypair");
         return -1;
     }
 
-    bbp_sha256(digest, (uint8_t *)message, sizeof(message));
-    bbp_print_hex("digest", digest, 32);
+    bbp_sha256(digest, (uint8_t *)message, strlen(message));
+    bbp_print_hex("digest      ", digest, 32);
+    printf("digest (exp): %s\n", digest_exp);
+
     signature = ECDSA_do_sign(digest, sizeof(digest), key);
     printf("r: %s\n", BN_bn2hex(signature->r));
     printf("s: %s\n", BN_bn2hex(signature->s));

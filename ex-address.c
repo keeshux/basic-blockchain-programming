@@ -13,6 +13,10 @@ int main() {
     uint8_t address_bytes[21];
     char *address;
 
+    const char address_exp[] = "mqMi3XYqsPvBWtrJTk8euPWDVmFTZ5jHuK";
+
+    /* */
+
     bbp_print_hex("pub", pub_bytes, sizeof(pub_bytes));
 
     address_bytes[0] = 0x6f;
@@ -20,7 +24,8 @@ int main() {
     bbp_print_hex("hash160", address_bytes + 1, 20);
 
     address = bbp_base58check(address_bytes, 21);
-    printf("address: %s\n", address);
+    printf("address      : %s\n", address);
+    printf("address (exp): %s\n", address_exp);
     free(address);
 
     return 0;

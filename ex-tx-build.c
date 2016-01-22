@@ -13,6 +13,10 @@ int main() {
     uint8_t *msg;
     size_t msg_len;
 
+    const char msg_exp[] = "0100000001f34e1c37e736727770fed85d1b129713ef7f300304498c31c833985f487fa2f3000000001976a9146bf19e55f94d986b4640c154d86469934191951188acffffffff02e0fe7e01000000001976a91418ba14b3682295cb05230e31fecb00089240660888ace084b003000000001976a9146bf19e55f94d986b4640c154d86469934191951188ac0000000001000000";
+
+    /* */
+
     /* output 1 (0.251 BTC) */
     bbp_txout_create_p2pkh(&outs[0], 25100000, "18ba14b3682295cb05230e31fecb000892406608");
 
@@ -44,7 +48,8 @@ int main() {
     printf("ins_sign[0].outpoint.index: %u\n", ins_sign[0].outpoint.index);
     bbp_print_hex("ins_sign[0].script", ins_sign[0].script, ins_sign[0].script_len);
     puts("");
-    bbp_print_hex("msg", msg, msg_len);
+    bbp_print_hex("msg      ", msg, msg_len);
+    printf("msg (exp): %s\n", msg_exp);
 
     free(msg);
     bbp_txout_destroy(&outs[0]);

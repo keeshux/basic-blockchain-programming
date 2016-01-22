@@ -13,6 +13,8 @@ int main() {
     size_t rawtx_len;
     uint8_t txid[32];
 
+    const char txid_exp[] = "d189c659a60a30ea7ca66ea53249c3ae3e7557399a48c6948738266f719616d2";
+
     /* inputs */
     bbp_outpoint_fill(&outpoint, "f34e1c37e736727770fed85d1b129713ef7f300304498c31c833985f487fa2f3", 0);
     bbp_txin_create_p2pkh(&ins[0], &outpoint, "30440220111a482aba6afba12a6f27de767dd4d06417def665bd100bc68c42845c752a8f02205e86f5e054b2c6cac5d663664e35779fb034387c07848bc7724442cacf659324", "0282006e9398a6986eda61fe91674c3a108c399475bf1e738f19dfc2db11db1d28", BBP_SIGHASH_ALL);
@@ -45,7 +47,8 @@ int main() {
     bbp_print_hex("rawtx", rawtx, rawtx_len);
     printf("size: %lu bytes\n", rawtx_len);
     puts("");
-    bbp_print_hex("txid", txid, 32);
+    bbp_print_hex("txid      ", txid, 32);
+    printf("txid (exp): %s\n", txid_exp);
 
     free(rawtx);
     bbp_txin_destroy(&ins[0]);

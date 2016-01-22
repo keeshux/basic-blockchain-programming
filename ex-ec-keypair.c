@@ -24,6 +24,12 @@ int main() {
     };
     int i;
 
+    const char priv_exp[] = "16260783e40b16731673622ac8a5b045fc3ea4af70f727f3f9e92bdd3a1ddc42";
+    const char pub_exp[2][200] = {
+        "0482006e9398a6986eda61fe91674c3a108c399475bf1e738f19dfc2db11db1d28130c6b3b28aef9a9c7e7143dac6cf12c09b8444db61679abb1d86f85c038a58c",
+        "0282006e9398a6986eda61fe91674c3a108c399475bf1e738f19dfc2db11db1d28"
+    };
+
     /* create keypair */
 
     key = bbp_ec_new_keypair(priv_bytes);
@@ -31,7 +37,7 @@ int main() {
         puts("Unable to create keypair");
         return -1;
     }
-    bbp_print_hex("priv", priv_bytes, sizeof(priv));
+    bbp_print_hex("priv #1   ", priv_bytes, sizeof(priv));
 
     /* get private key back from EC_KEY */
 
@@ -41,7 +47,9 @@ int main() {
         return -1;
     }
     BN_bn2bin(priv_bn, priv);
-    bbp_print_hex("priv", priv, sizeof(priv));
+    bbp_print_hex("priv #2   ", priv, sizeof(priv));
+
+    printf("priv (exp): %s\n", priv_exp);
 
     /* get encoded public key from EC_KEY in all conversion forms */
 
@@ -62,7 +70,8 @@ int main() {
         }
 
         printf("conversion form: %s\n", conv_forms_desc[i]);
-        bbp_print_hex("pub", pub, pub_len);
+        bbp_print_hex("pub      ", pub, pub_len);
+        printf("pub (exp): %s\n", pub_exp[i]);
 
         free(pub);
     }

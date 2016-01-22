@@ -40,7 +40,7 @@ typedef enum {
 typedef uint8_t *bbp_message_t;
 
 void bbp_outpoint_fill(bbp_outpoint_t *outpoint, const char *txid, uint32_t index) {
-    bbp_parse_hex(BBP_BIG, outpoint->txid, txid);
+    bbp_parse_hex(outpoint->txid, txid);
     outpoint->index = bbp_eint32(BBP_LITTLE, index);
 }
 
@@ -49,7 +49,7 @@ void bbp_txout_create_p2pkh(bbp_txout_t *txout, const uint64_t value, const char
     sprintf(script, "76a914%s88ac", hash160);
 
     txout->value = bbp_eint64(BBP_LITTLE, value);
-    txout->script = bbp_alloc_hex(BBP_LITTLE, script, (size_t *)&txout->script_len);
+    txout->script = bbp_alloc_hex(script, (size_t *)&txout->script_len);
 }
 
 void bbp_txout_destroy(bbp_txout_t *txout) {
@@ -63,7 +63,7 @@ void bbp_txin_create_p2pkh(bbp_txin_t *txin, const bbp_outpoint_t *outpoint,
     sprintf(script, "%02lx%s%02x%02lx%s", strlen(sig) / 2 + 1, sig, flag, strlen(pub) / 2, pub);
 
     memcpy(&txin->outpoint, outpoint, sizeof(bbp_outpoint_t));
-    txin->script = bbp_alloc_hex(BBP_LITTLE, script, (size_t *)&txin->script_len);
+    txin->script = bbp_alloc_hex(script, (size_t *)&txin->script_len);
     txin->sequence = 0xffffffff;
 }
 

@@ -29,6 +29,12 @@ int main() {
     uint8_t digest[32];
     int verified;
 
+    const char *r_exp = "2B2B529BDBDC93E78AF7E00228B179918B032D76902F74EF454426F7D06CD0F9";
+    const char *s_exp = "62DDC76451CD04CB567CA5C5E047E8AC41D3D4CF7CB92434D55CB486CCCF6AF2";
+    const char *digest_exp = "4554813e91f3d5be790c7c608f80b2b00f3ea77512d49039e9e3dc45f89e2f01";
+
+    /* */
+
     key = bbp_ec_new_pubkey(pub_bytes, sizeof(pub_bytes));
     if (!key) {
         puts("Unable to create keypair");
@@ -37,11 +43,14 @@ int main() {
 
     der_bytes_copy = der_bytes;
     signature = d2i_ECDSA_SIG(NULL, &der_bytes_copy, sizeof(der_bytes));
-    printf("r: %s\n", BN_bn2hex(signature->r));
-    printf("s: %s\n", BN_bn2hex(signature->s));
+    printf("r      : %s\n", BN_bn2hex(signature->r));
+    printf("r (exp): %s\n", r_exp);
+    printf("s      : %s\n", BN_bn2hex(signature->s));
+    printf("s (exp): %s\n", s_exp);
 
     bbp_sha256(digest, (uint8_t *)message, strlen(message));
-    bbp_print_hex("digest", digest, 32);
+    bbp_print_hex("digest      ", digest, 32);
+    printf("digest (exp): %s\n", digest_exp);
     verified = ECDSA_do_verify(digest, sizeof(digest), signature, key);
 
     switch (verified) {
