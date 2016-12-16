@@ -12,7 +12,7 @@ char *bbp_base58(const uint8_t *bytes, size_t len) {
     size_t str_len;
     char *str;
     BN_CTX *ctx;
-    BIGNUM base, x, r;
+    BIGNUM *base, *x, *r;
     int i, j;
     
     str_len = len * 138 / 100 + 2;
@@ -21,16 +21,16 @@ char *bbp_base58(const uint8_t *bytes, size_t len) {
     ctx = BN_CTX_new();
     BN_CTX_start(ctx);
 
-    BN_init(&base);
-    BN_init(&x);
-    BN_init(&r);
-    BN_set_word(&base, 58);
-    BN_bin2bn(bytes, len, &x);
+    base = BN_new();
+    x = BN_new();
+    r = BN_new();
+    BN_set_word(base, 58);
+    BN_bin2bn(bytes, len, x);
     
     i = 0;
-    while (!BN_is_zero(&x)) {
-        BN_div(&x, &r, &x, &base, ctx);
-        str[i] = bbp_base58_alphabet[BN_get_word(&r)];
+    while (!BN_is_zero(x)) {
+        BN_div(x, r, x, base, ctx);
+        str[i] = bbp_base58_alphabet[BN_get_word(r)];
         ++i;
     }
     for (j = 0; j < len; ++j) {
@@ -42,9 +42,9 @@ char *bbp_base58(const uint8_t *bytes, size_t len) {
     }
     bbp_reverse((uint8_t *)str, i);
     
-    BN_clear_free(&r);
-    BN_clear_free(&x);
-    BN_free(&base);
+    BN_clear_free(r);
+    BN_clear_free(x);
+    BN_free(base);
     BN_CTX_end(ctx);
     BN_CTX_free(ctx);
 

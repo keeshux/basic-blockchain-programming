@@ -8,7 +8,7 @@
 
 EC_KEY *bbp_ec_new_keypair(const uint8_t *priv_bytes) {
     EC_KEY *key;
-    BIGNUM priv;
+    BIGNUM *priv;
     BN_CTX *ctx;
     const EC_GROUP *group;
     EC_POINT *pub;
@@ -19,9 +19,9 @@ EC_KEY *bbp_ec_new_keypair(const uint8_t *priv_bytes) {
 
     /* set private key through BIGNUM */
 
-    BN_init(&priv);
-    BN_bin2bn(priv_bytes, 32, &priv);
-    EC_KEY_set_private_key(key, &priv);
+    priv = BN_new();
+    BN_bin2bn(priv_bytes, 32, priv);
+    EC_KEY_set_private_key(key, priv);
 
     /* derive public key from private key and group */
     
@@ -30,7 +30,7 @@ EC_KEY *bbp_ec_new_keypair(const uint8_t *priv_bytes) {
 
     group = EC_KEY_get0_group(key);
     pub = EC_POINT_new(group);
-    EC_POINT_mul(group, pub, &priv, NULL, NULL, ctx);
+    EC_POINT_mul(group, pub, priv, NULL, NULL, ctx);
     EC_KEY_set_public_key(key, pub);
 
     /* release resources */
@@ -38,7 +38,7 @@ EC_KEY *bbp_ec_new_keypair(const uint8_t *priv_bytes) {
     EC_POINT_free(pub);
     BN_CTX_end(ctx);
     BN_CTX_free(ctx);
-    BN_clear_free(&priv);
+    BN_clear_free(priv);
 
     return key;
 }
